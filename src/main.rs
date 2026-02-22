@@ -3,9 +3,6 @@ use std::{env, fs::File, io, path::Path};
 use bis_rust::{Transaction, TransactionsParser, 
     error::ERR_PARAMS, CliParams, get_params, get_parser_for_format};
 
-//pub mod utils;
-//use crate::utils::{CliParams, get_params, get_parser_for_format};
-
 fn main() -> io::Result<()> {
 
     let args: Vec<String> = env::args().collect(); 
@@ -26,10 +23,5 @@ fn main() -> io::Result<()> {
     let mut out_file = File::create(Path::new(params.second_file_name.trim()))?;
     out_parser.write_to(&mut out_file, res_vec)?;
 
-    //////////////////////////////////////////////////////////////////////////////
-    println!("Press Enter to exit......");
-    let mut key_pressed = String::new();
-    io::stdin().read_line(&mut key_pressed)?;
-    //////////////////////////////////////////////////////////////////////////////
     Ok(())
 }

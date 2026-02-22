@@ -261,3 +261,33 @@ pub fn get_parser_for_format(val: TransactionsFormatType) -> FormatParsers {
         _ => panic!("{}", error::ERR_FORMAT),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new_tx_create() {
+        let tx = Transaction::new();
+        assert_eq!(tx.tx_type, TransactionType::EMPTY);
+    }
+
+    #[test]
+    fn test_format_parsers_create() {
+        let parser = get_parser_for_format(TransactionsFormatType::BIN);
+        assert_eq!(parser.get_using_format_type(), TransactionsFormatType::BIN);
+    }
+
+    #[test]
+    fn test_compare_tx_sets() {
+        let left_side: Vec<Transaction> = vec![Transaction::new()];
+        let right_side: Vec<Transaction> = vec![Transaction::new()];
+        assert_eq!(compare_tx_sets(left_side, right_side), true);
+    }
+
+    #[test]
+    fn test_get_format_value() {
+        let fmt = String::from("txt");
+        assert_eq!(get_format_value(&fmt), TransactionsFormatType::TXT);
+    }
+} 
