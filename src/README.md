@@ -28,6 +28,10 @@ Converter - консольное приложение для парсинга ф
 
 cargo build
 
+## Тестироание
+
+cargo test -- --test-threads=1
+
 ## Запуск проекта
 
 cargo run --bin convert -- --input <filename> --input-format txt|csv|bin --output-format txt|csv|bin --output <filename>

@@ -1,14 +1,13 @@
-use std::{env, fs::File, io};
+use std::{env, fs::File};
 
-use bis_rust::{Transaction, TransactionsParser, compare_tx_sets, 
-    error::ERR_PARAMS, CliParams, get_params, get_parser_for_format};
+use bis_rust::{CliParams, Transaction, TransactionsParser, compare_tx_sets, error::{ERR_PARAMS_COMPARER, ERR_PARAMS_CONVERTER, ParserError}, get_params, get_parser_for_format};
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), ParserError> {
 
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 5 {
-        println!("{}", ERR_PARAMS);
+        println!("{}", ERR_PARAMS_COMPARER);
         return Ok(());
     }
 
