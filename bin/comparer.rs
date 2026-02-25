@@ -1,6 +1,7 @@
 use std::{env, fs::File};
 
-use bis_rust::{CliParams, Transaction, TransactionsParser, compare_tx_sets, error::{ERR_PARAMS_COMPARER, ERR_PARAMS_CONVERTER, ParserError}, get_params, get_parser_for_format};
+use bis_rust::{CliParams, Transaction, TransactionsParser, compare_tx_sets, error::{ERR_PARAMS_COMPARER, 
+    ParserError}, get_params, get_parser_for_format};
 
 fn main() -> Result<(), ParserError> {
 
@@ -26,10 +27,10 @@ fn main() -> Result<(), ParserError> {
     let result = compare_tx_sets(res_vec_left, res_vec_right);
 
     if result {
-        println!("{}", "Transactions sets are the same.");
+        println!("Transactions sets are the same.");
     } 
     else {
-        println!("{}", "Transactions sets are NOT the same.");
+        println!("Transactions sets are NOT the same.");
     }
 
     Ok(())

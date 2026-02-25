@@ -31,10 +31,6 @@ impl TransactionsParser for BinParser {
                 },
             }
 
-            if String::from(MAGIC) != String::from_utf8_lossy(&buf4).into_owned() {
-                break;
-            }
-
             reader.read_exact(&mut buf4)?;
 
             let mut buf8 = [0u8; 8];
@@ -87,14 +83,14 @@ impl TransactionsParser for BinParser {
     fn write_to<W: std::io::Write>(&self, target: &mut W, data: &Vec<Transaction>) -> Result<(), ParserError> {
 
         for tx in data {
-            target.write(MAGIC.as_bytes())?;
+            target.write_all(MAGIC.as_bytes())?;
 
             let desc_len = tx.description.len();
             let body_len = BIN_BODY_LEN + (desc_len as u32); 
-            target.write(&(body_len).to_be_bytes())?;
+            target.write_all(&(body_len).to_be_bytes())?;
             
-            target.write(&tx.tx_id.to_be_bytes())?;
-            target.write(
+            target.write_all(&tx.tx_id.to_be_bytes())?;
+            target.write_all(
                 match tx.tx_type {
                     TransactionType::DEPOSIT => &[0],
                     TransactionType::TRANSFER => &[1],
@@ -102,11 +98,11 @@ impl TransactionsParser for BinParser {
                     _ => &[3]
                 }
             )?;
-            target.write(&tx.from_user_id.to_be_bytes())?;
-            target.write(&tx.to_user_id.to_be_bytes())?;
-            target.write(&tx.amount.to_be_bytes())?;
-            target.write(&tx.timestamp.to_be_bytes())?;
-            target.write(
+            target.write_all(&tx.from_user_id.to_be_bytes())?;
+            target.write_all(&tx.to_user_id.to_be_bytes())?;
+            target.write_all(&tx.amount.to_be_bytes())?;
+            target.write_all(&tx.timestamp.to_be_bytes())?;
+            target.write_all(
                 match tx.status {
                     TransactionStatus::SUCCESS => &[0],
                     TransactionStatus::FAILURE => &[1],
@@ -115,10 +111,10 @@ impl TransactionsParser for BinParser {
                 }
             )?;
             
-            target.write(&((desc_len + 2) as u32).to_be_bytes())?;
+            target.write_all(&((desc_len + 2) as u32).to_be_bytes())?;
             if desc_len != 0 {
                 let desc_str = "\"".to_owned() + tx.description.as_str() + "\"";
-                target.write(desc_str.as_bytes())?;
+                target.write_all(desc_str.as_bytes())?;
             }
         }
         Ok(())

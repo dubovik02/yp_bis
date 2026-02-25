@@ -36,14 +36,14 @@ impl TransactionsParser for CsvParser {
 
             let str_tx = 
                 "{".to_owned() + 
-                "\"tx_id\":" + &tmp_vec[0] + (",") + 
-                "\"tx_type\":" + "\"" + &tmp_vec[1] + "\"" + (",") + 
-                "\"from_user_id\":" + &tmp_vec[2] + (",") + 
-                "\"to_user_id\":" + &tmp_vec[3] + (",") + 
-                "\"amount\":" + &tmp_vec[4] + (",") + 
-                "\"timestamp\":" + &tmp_vec[5] + (",") + 
-                "\"status\":" + "\"" + &tmp_vec[6] + "\"" + (",") + 
-                "\"description\":" + &tmp_vec[7] + 
+                "\"tx_id\":" + tmp_vec[0] + (",") + 
+                "\"tx_type\":" + "\"" + tmp_vec[1] + "\"" + (",") + 
+                "\"from_user_id\":" + tmp_vec[2] + (",") + 
+                "\"to_user_id\":" + tmp_vec[3] + (",") + 
+                "\"amount\":" + tmp_vec[4] + (",") + 
+                "\"timestamp\":" + tmp_vec[5] + (",") + 
+                "\"status\":" + "\"" + tmp_vec[6] + "\"" + (",") + 
+                "\"description\":" + tmp_vec[7] + 
                 "}";
             let tx: Transaction = serde_json::from_str(&str_tx)?;
             result.push(tx);
@@ -55,7 +55,7 @@ impl TransactionsParser for CsvParser {
         let mut result_str = String::from(CVS_HEADER);
 
         for tx in data {
-            result_str = result_str.to_owned() + String::from(
+            result_str = result_str.to_owned() + (
                 tx.tx_id.to_string() + "," +
                 tx.tx_type.to_string().as_str() + "," +
                 tx.from_user_id.to_string().as_str() + "," +

@@ -88,9 +88,9 @@ impl TransactionsParser for FormatParsers {
 
     fn write_to<W: std::io::Write>(&self, target: &mut W, data: &Vec<Transaction>) -> Result<(), ParserError> {
         match self {
-            Self::Txt => txt_format::TxtParser::default().write_to(target, &data),
-            Self::Csv => csv_format::CsvParser::default().write_to(target, &data),
-            Self::Bin => bin_format::BinParser::default().write_to(target, &data),
+            Self::Txt => txt_format::TxtParser::default().write_to(target, data),
+            Self::Csv => csv_format::CsvParser::default().write_to(target, data),
+            Self::Bin => bin_format::BinParser::default().write_to(target, data),
        }
     }
 }
@@ -137,17 +137,17 @@ pub trait TransactionsParser {
 
     /// Функция чтения из источника представленного в конкретном формате финансовых данных
     /// * 'source' - источник даннвх (файл, буфер)
-    fn from_read<R: std::io::Read>(&self, source: &mut R) -> Result<Vec<Transaction>, ParserError>;
+    fn from_read<Reader: std::io::Read>(&self, source: &mut Reader) -> Result<Vec<Transaction>, ParserError>;
 
     /// Функция записи в источник в конкретном формате финансовых данных
     /// * 'target &mut W,' - получатель даннвх (файл, буфер), * 'data Vec<Transaction>' - данных о финансовых транзакциях
-    fn write_to<W: std::io::Write>(&self, target: &mut W, data: &Vec<Transaction>) -> Result<(), ParserError>;
+    fn write_to<Writer: std::io::Write>(&self, target: &mut Writer, data: &Vec<Transaction>) -> Result<(), ParserError>;
 }
 
 fn txt_to_json_str(tx: &str) -> Result<String, ParserError> {
     let tx_json = &tx.replace(": ", ":");
 
-    let json_vec: Vec<&str> = tx_json.split(":").into_iter().collect();
+    let json_vec: Vec<&str> = tx_json.split(":").collect();
 
     if json_vec.len() != 2 {
         return Result::Err(ParserError::InvalidTxtStrStructure(tx.to_string()));
@@ -239,8 +239,8 @@ fn check_file_creation(path: &str) -> bool {
     }
 }
 
-fn get_format_value(val: &String) -> TransactionsFormatType {
-    match val.as_str() {
+fn get_format_value(val: &str) -> TransactionsFormatType {
+    match val {
         "txt" => TransactionsFormatType::TXT,
         "csv" => TransactionsFormatType::CSV,
         "bin" => TransactionsFormatType::BIN,
