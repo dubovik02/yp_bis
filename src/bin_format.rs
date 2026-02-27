@@ -2,6 +2,7 @@ use crate::{
     BIN_BODY_LEN, MAGIC, ParserError, Transaction, TransactionStatus, TransactionType, TransactionsFormatType, TransactionsParser};
 use std::io::{self, BufReader, Read};
 
+/// Парсер бинарного формата BIN
 #[derive(Default)]
 pub struct BinParser {
     

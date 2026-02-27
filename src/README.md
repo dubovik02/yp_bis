@@ -34,4 +34,4 @@ cargo test -- --test-threads=1
 
 ## Запуск проекта
 
-cargo run --bin convert -- --input <filename> --input-format txt|csv|bin --output-format txt|csv|bin --output <filename>
+cargo run --bin convert <input-filename> <txt|csv|bin> <txt|csv|bin> <output-filename>

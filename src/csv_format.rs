@@ -2,6 +2,8 @@ use crate::{
     CVS_HEADER, ParserError, Transaction, TransactionsFormatType, TransactionsParser};
 
 #[derive(Default)]
+
+/// Парсер CSV формата
 pub struct CsvParser {
     
 }

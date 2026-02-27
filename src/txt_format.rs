@@ -2,6 +2,8 @@ use crate::{
     ParserError, Transaction, TransactionsFormatType, TransactionsParser, txt_to_json_str};
 
 #[derive(Default)]
+
+/// Парсер текстового формата TXT
 pub struct TxtParser {
     
 }
