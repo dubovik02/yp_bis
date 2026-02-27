@@ -30,7 +30,25 @@ Converter - консольное приложение для парсинга ф
 
 Comparer - CLI приложение для чтения данных о транзакциях из двух файлов и сравнения.
 
+## Сборка проекта
+
+cargo build
+
+## Тесты
+
+cargo test -- --test-threads=1
+
 ## Запуск проекта
 
-cargo run --bin convert -- --input <filename> --input-format txt|csv|bin --output-format txt|csv|bin --output <filename>
-cargo run --bin comparer -- --file1 <filename> --format1 txt|csv|bin --format2 txt|csv|bin --file2 <filename>
+cargo run --bin convert <input-filename> <txt|csv|bin> <txt|csv|bin> <output-filename>
+cargo run --bin comparer <filename1> <txt|csv|bin> <txt|csv|bin> <filename2>
+
+## Примеры файлов в форматах txt, csv, bin
+
+[Формат TXT](src/example/records_example.txt)
+
+[Формат CSV](src/example/records_example.csv)
+
+[Формат BIN](src/example/records_example.bin)
+
+
